@@ -1,0 +1,24 @@
+resources:
+- name: flight-school
+  type: git
+  source:
+    uri: https://github.com/Kevin-Fries-Altoros/flight-school
+    branch: master
+
+jobs:
+- name: test-app
+  plan:
+  - get: flight-school
+  - task: tests
+    config:
+      platform: linux
+
+      image_resource:
+        type: docker-image
+        source: 
+          repository: ruby
+          tag: 2.3.0
+
+      run:
+        path: ./flight-school/ci/test.sh
+
